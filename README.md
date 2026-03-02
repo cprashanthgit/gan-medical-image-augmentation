@@ -2,7 +2,7 @@
 
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![TensorFlow 2.x](https://img.shields.io/badge/TensorFlow-2.x-orange.svg)](https://www.tensorflow.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 
 ## Overview
 
@@ -216,13 +216,15 @@ This project serves as a foundation for building a comprehensive multimodal ML p
 
 3. Tschandl, P., Rosendahl, C., & Kittler, H. (2018). *The HAM10000 dataset, a large collection of multi-source dermatoscopic images of common pigmented skin lesions*. Scientific Data.
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Author
 
-**Prash**
+**Prashanth Chitturi**
+
+## Report
+
+Detailed report can be found [here][report]
+[report]: https://github.com/cprashanthgit/gan-medical-image-augmentation/blob/main/ANN_Project2_Report.pdf
 
 ## Acknowledgments
 
