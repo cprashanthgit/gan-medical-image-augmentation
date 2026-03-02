@@ -223,8 +223,7 @@ This project serves as a foundation for building a comprehensive multimodal ML p
 
 ## Report
 
-Detailed report can be found [here][report]
-[report]: https://github.com/cprashanthgit/gan-medical-image-augmentation/blob/main/ANN_Project2_Report.pdf
+Detailed report can be found here: https://github.com/cprashanthgit/gan-medical-image-augmentation/blob/main/ANN_Project2_Report.pdf
 
 ## Acknowledgments
 
