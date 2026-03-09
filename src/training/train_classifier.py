@@ -262,11 +262,11 @@ class ClassifierTrainer:
     def save_models(self, prefix: str = "classifier"):
         """Save both models."""
         if self.baseline_model:
-            path = self.output_dir / f"{prefix}_baseline.h5"
+            path = self.output_dir / f"{prefix}_baseline.keras"
             self.baseline_model.save(str(path))
             print(f"Saved baseline model to: {path}")
         
         if self.augmented_model:
-            path = self.output_dir / f"{prefix}_augmented.h5"
+            path = self.output_dir / f"{prefix}_augmented.keras"
             self.augmented_model.save(str(path))
             print(f"Saved augmented model to: {path}")

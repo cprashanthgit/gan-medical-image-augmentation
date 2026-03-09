@@ -5,7 +5,7 @@ Evaluation Script for Trained Models.
 Load pre-trained models and evaluate them on test data.
 
 Usage:
-    python evaluate.py --model_path ./outputs/classifier/dcgan_augmented.h5 --data_dir ./data
+    python evaluate.py --model_path ./outputs/classifier/dcgan_augmented.keras --data_dir ./data
 """
 
 import argparse
@@ -35,7 +35,7 @@ def parse_args():
         "--model_path",
         type=str,
         required=True,
-        help="Path to saved model (.h5)"
+        help="Path to saved model (.keras)"
     )
     parser.add_argument(
         "--data_dir",
@@ -88,7 +88,11 @@ def main():
     
     print("\n[2/3] Loading model...")
     
-    model = keras.models.load_model(args.model_path)
+    from src.models.classifier import categorical_focal_loss
+    model = keras.models.load_model(
+        args.model_path,
+        custom_objects={'focal_loss_fixed': categorical_focal_loss(alpha=0.25, gamma=2.0)}
+    )
     print(f"Loaded model from: {args.model_path}")
     
     print("\n[3/3] Evaluating...")
@@ -107,7 +111,7 @@ def main():
     print("\nClassification Report:")
     print(generate_classification_report(y_true, y_pred, label_names))
     
-    model_name = os.path.basename(args.model_path).replace('.h5', '')
+    model_name = os.path.basename(args.model_path).replace('.keras', '').replace('.h5', '')
     
     plot_confusion_matrix(
         y_true, y_pred, label_names,
@@ -125,7 +129,10 @@ def main():
         print(" Model Comparison")
         print("="*70)
         
-        model2 = keras.models.load_model(args.compare_with)
+        model2 = keras.models.load_model(
+            args.compare_with,
+            custom_objects={'focal_loss_fixed': categorical_focal_loss(alpha=0.25, gamma=2.0)}
+        )
         print(f"Loaded comparison model from: {args.compare_with}")
         
         y_pred2 = np.argmax(model2.predict(X_test), axis=1)

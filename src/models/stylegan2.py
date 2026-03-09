@@ -386,10 +386,10 @@ class StyleGAN2:
     
     def save_weights(self, filepath: str):
         """Save model weights."""
-        self.generator.save_weights(f"{filepath}_generator.h5")
-        self.discriminator.save_weights(f"{filepath}_discriminator.h5")
+        self.generator.save_weights(f"{filepath}_generator.weights.h5")
+        self.discriminator.save_weights(f"{filepath}_discriminator.weights.h5")
     
     def load_weights(self, filepath: str):
         """Load model weights."""
-        self.generator.load_weights(f"{filepath}_generator.h5")
-        self.discriminator.load_weights(f"{filepath}_discriminator.h5")
+        self.generator.load_weights(f"{filepath}_generator.weights.h5")
+        self.discriminator.load_weights(f"{filepath}_discriminator.weights.h5")
