@@ -11,6 +11,25 @@ from tensorflow.keras import layers, Model, Input
 from typing import Tuple, Optional, Dict
 import numpy as np
 
+def categorical_focal_loss(gamma=2.0, alpha=0.25):
+    """
+    Implementation of Focal Loss from the paper in multiclass classification
+    Formula:
+        loss = -alpha * (1 - p)^gamma * log(p)
+    """
+    def focal_loss_fixed(y_true, y_pred):
+        # Scale predictions so that the class probas of each sample sum to 1
+        y_pred /= tf.keras.backend.sum(y_pred, axis=-1, keepdims=True)
+        # Clip the prediction value to prevent NaN's and Inf's
+        epsilon = tf.keras.backend.epsilon()
+        y_pred = tf.clip_by_value(y_pred, epsilon, 1. - epsilon)
+        # Calculate Cross Entropy
+        cross_entropy = -y_true * tf.math.log(y_pred)
+        # Calculate Focal Loss
+        loss = alpha * tf.math.pow(1 - y_pred, gamma) * cross_entropy
+        # Compute mean loss in mini_batch
+        return tf.keras.backend.mean(tf.keras.backend.sum(loss, axis=-1))
+    return focal_loss_fixed
 
 class CNNClassifier:
     """
@@ -71,7 +90,7 @@ class CNNClassifier:
         
         model.compile(
             optimizer=keras.optimizers.Adam(self.learning_rate),
-            loss="categorical_crossentropy",
+            loss=categorical_focal_loss(alpha=0.25, gamma=2.0),
             metrics=["accuracy"]
         )
         
@@ -169,7 +188,10 @@ class CNNClassifier:
     def load(cls, filepath: str) -> "CNNClassifier":
         """Load model from file."""
         instance = cls.__new__(cls)
-        instance.model = keras.models.load_model(filepath)
+        instance.model = keras.models.load_model(
+            filepath,
+            custom_objects={'focal_loss_fixed': categorical_focal_loss(alpha=0.25, gamma=2.0)}
+        )
         instance.history = None
         return instance
 

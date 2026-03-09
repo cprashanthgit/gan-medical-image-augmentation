@@ -99,7 +99,7 @@ python train_stylegan2.py --data_dir ./data --gan_epochs 100 --dlatent_dim 256
 ### Evaluating Models
 
 ```bash
-python evaluate.py --model_path ./outputs/classifier/dcgan_augmented.h5 --data_dir ./data
+python evaluate.py --model_path ./outputs/classifier/dcgan_augmented.keras --data_dir ./data
 ```
 
 ### Command Line Arguments
